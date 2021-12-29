@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  tibiadata:
+    image: ghcr.io/tibiadata/tibiadata-api-go:main
+    restart: always
+    environment:
+      - TIBIADATA_UA_HOSTNAME=${TIBIADATA_UA_HOSTNAME}
+      - TIBIADATA_EDITION=${TIBIADATA_EDITION}
+      - DEBUG_MODE=false
+    ports:
+      - 8080:8080
