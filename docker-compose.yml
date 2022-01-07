@@ -5,7 +5,7 @@ services:
     image: ghcr.io/tibiadata/tibiadata-api-go:${TIBIADATA_IMAGE_LABEL}
     restart: always
     environment:
-      - TIBIADATA_UA_HOSTNAME=${TIBIADATA_UA_HOSTNAME}
+      - TIBIADATA_HOSTNAME=${TIBIADATA_HOSTNAME}
       - TIBIADATA_EDITION=${TIBIADATA_EDITION}
       - DEBUG_MODE=false
     ports:
