@@ -7,6 +7,7 @@ services:
     environment:
       - TIBIADATA_HOSTNAME=${TIBIADATA_HOSTNAME}
       - TIBIADATA_EDITION=${TIBIADATA_EDITION}
+      - GIN_TRUSTED_PROXIES=${GIN_TRUSTED_PROXIES}
       - DEBUG_MODE=false
     logging:
       driver: "json-file"
