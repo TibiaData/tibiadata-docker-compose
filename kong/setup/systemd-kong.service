@@ -1,0 +1,12 @@
+[Unit]
+Description=Kong API Gateway
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker compose -f /opt/tibiadata/tibiadata-docker-compose/kong/docker-compose.yml up
+ExecStop=/usr/bin/docker compose -f /opt/tibiadata/tibiadata-docker-compose/kong/docker-compose.yml down
+
+[Install]
+WantedBy=multi-user.target

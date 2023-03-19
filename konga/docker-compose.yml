@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  # Postgres: Konga Database
+  konga-db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: ${KONGA_DB_DATABASE:-konga}
+      POSTGRES_USER: ${KONGA_DB_USER:-konga}
+      POSTGRES_PASSWORD: ${KONGA_DB_PASSWORD:-abc123}
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "${KONGA_DB_USER:-konga}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: on-failure
+    stdin_open: true
+    tty: true
+    volumes:
+      - konga_data:/var/lib/postgresql/data
+
+  # Konga: database migration
+  konga-prepare:
+    image: pantsel/konga
+    command: "-c prepare -a postgres -u postgresql://${KONGA_DB_USER:-konga}:${KONGA_DB_PASSWORD:-abc123}@${KONGA_DB_HOST:-konga-db}:5432/${KONGA_DB_DATABASE:-konga}"
+    restart: on-failure
+    depends_on:
+      konga-db:
+        condition: service_healthy
+
+  # Konga: GUI of KONG Admin API
+  konga:
+    image: pantsel/konga
+    environment:
+      DB_ADAPTER: postgres
+      DB_DATABASE: ${KONGA_DB_DATABASE:-konga}
+      DB_HOST: ${KONGA_DB_HOST:-konga-db}
+      DB_PASSWORD: ${KONGA_DB_PASSWORD:-abc123}
+      DB_USER: ${KONGA_DB_USER:-konga}
+      NODE_ENV: ${KONGA_ENV:-development}
+      PORT: ${KONGA_PORT:-1337}
+      KONGA_LOG_LEVEL: ${KONGA_LOG_LEVEL:-warn}
+      TOKEN_SECRET: ${TOKEN_SECRET:-some_secret_token}
+      # KONGA_SEED_USER_DATA_SOURCE_FILE: /seed/kong_user.data
+      # KONGA_SEED_KONG_NODE_DATA_SOURCE_FILE: /seed/kong_node.data
+    restart: on-failure
+    depends_on:
+      konga-db:
+        condition: service_healthy
+    ports:
+      - 1337:1337
+    # volumes:
+    #   - ./kong_user.data:/seed/kong_user.data
+    #   - ./kong_node.data:/seed/kong_node.data
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "100m"
+
+volumes:
+  konga_data: {}
