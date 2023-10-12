@@ -37,7 +37,7 @@ services:
 
   # Kong: database migration
   kong-migrations:
-    image: "${KONG_DOCKER_TAG:-kong:latest}"
+    image: "${KONG_DOCKER_TAG:-kong/kong:latest-ubuntu}"
     command: kong migrations bootstrap
     depends_on:
       kong-db:
@@ -48,7 +48,7 @@ services:
 
   # Kong: database migration-up
   kong-migrations-up:
-    image: "${KONG_DOCKER_TAG:-kong:latest}"
+    image: "${KONG_DOCKER_TAG:-kong/kong:latest-ubuntu}"
     command: kong migrations up && kong migrations finish
     depends_on:
       kong-db:
@@ -59,7 +59,7 @@ services:
 
   # Kong: The API Gateway
   kong:
-    image: "${KONG_DOCKER_TAG:-kong:latest}"
+    image: "${KONG_DOCKER_TAG:-kong/kong:latest-ubuntu}"
     container_name: kong-api
     depends_on:
       kong-db:
