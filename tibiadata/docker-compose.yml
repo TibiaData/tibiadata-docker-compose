@@ -2,8 +2,8 @@ version: "3.9"
 
 services:
   # TibiaData API
-  tibiadata-api:
-    image: ghcr.io/tibiadata/tibiadata-api-go:${TIBIADATA_IMAGE_LABEL:-latest}
+  tibiadata-api-4:
+    image: ghcr.io/tibiadata/tibiadata-api-go:${TIBIADATA_IMAGE_LABEL_4:-latest}
     restart: always
     environment:
       # Required environment variables
@@ -25,3 +25,28 @@ services:
         max-size: "100m"
     ports:
       - 8080:8080
+
+  tibiadata-api-3:
+    image: ghcr.io/tibiadata/tibiadata-api-go:${TIBIADATA_IMAGE_LABEL_3:-3}
+    restart: always
+    environment:
+      # Required environment variables
+      - TIBIADATA_HOST=${TIBIADATA_HOST:?TIBIADATA_HOST is required}
+
+      # Optional environment variables
+      - TIBIADATA_PROXY=${TIBIADATA_PROXY:-}
+      - TIBIADATA_PROXY_PROTOCOL=${TIBIADATA_PROXY_PROTOCOL:-}
+      - GIN_TRUSTED_PROXIES=${GIN_TRUSTED_PROXIES:-}
+
+      # Default environment variables
+      - GIN_MODE=${GIN_MODE:-release}
+      - DEBUG_MODE=${DEBUG_MODE:-false}
+      - TIBIADATA_EDITION=${TIBIADATA_EDITION:-open-source}
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "100m"
+    ports:
+      - 8081:8080
+
