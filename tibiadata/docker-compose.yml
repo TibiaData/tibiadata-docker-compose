@@ -3,7 +3,7 @@ version: "3.9"
 services:
   # TibiaData API
   tibiadata-api-4:
-    image: ghcr.io/tibiadata/tibiadata-api-go:${TIBIADATA_IMAGE_LABEL_4:-latest}
+    image: ghcr.io/tibiadata/tibiadata-api-go:${TIBIADATA_IMAGE_LABEL_4:-4}
     restart: always
     environment:
       # Required environment variables
