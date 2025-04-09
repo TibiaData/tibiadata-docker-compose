@@ -2,8 +2,8 @@
 
 TibiaData docker-compose configurations for TibiaData container, Kong API gateway and Konga admin GUI.
 
-**Note**:\
-Hosting of TibiaData has been switched to Kubernetes, so maintenance of this repository is limited.
+> [!WARNING]  
+> This is not used anymore after the migration to Kubernetes.
 
 ## Folders
 
