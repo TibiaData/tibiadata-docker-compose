@@ -2,8 +2,8 @@
 
 Below are some initial setup steps to consider.
 
-**Note**:\
-Following commands below are written for Debian 11 on a fresh installed system.
+> [!NOTE]  
+> Following commands below are written for Debian 11 on a fresh installed system.
 
 ## docker
 
@@ -14,16 +14,17 @@ In the `config/` folder you can find [docker-daemon.json](./config/docker-daemon
 ### Steps
 
 1. Copy config/docker-daemon.json to docker
-    ```console
-    sudo cp config/docker-daemon.json /etc/docker/daemon.json
-    ```
+
+   ```console
+   sudo cp config/docker-daemon.json /etc/docker/daemon.json
+   ```
 
 1. Restart docker (containerd)
-    ```console
-    sudo systemctl restart containerd.service
-    ```
+   ```console
+   sudo systemctl restart containerd.service
+   ```
 
-## systemd 
+## systemd
 
 Due to the configuration of restart in [docker-compose.yml](docker-compose.yml), the Kong gateway is not starting on boot.
 
@@ -36,16 +37,19 @@ Adjust the location where the docker-compose.yml file is located on your system,
 ### Steps
 
 1. Copy config/system-kong.service file to systemd
-    ```console
-    sudo cp config/system-kong.service /lib/systemd/system/kong.service
-    ```
+
+   ```console
+   sudo cp config/system-kong.service /lib/systemd/system/kong.service
+   ```
 
 1. Edit the kong.service file
-    ```console
-    sudo vim /lib/systemd/system/kong.service
-    ```
+
+   ```console
+   sudo vim /lib/systemd/system/kong.service
+   ```
 
 1. Enable systemd to start kong on boot
-    ```console
-    sudo systemctl enable kong.service
-    ```
+
+   ```console
+   sudo systemctl enable kong.service
+   ```

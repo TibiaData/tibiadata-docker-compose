@@ -1,7 +1,6 @@
 version: "3.9"
 
-x-kong-config:
-  &kong-env
+x-kong-config: &kong-env
   KONG_DATABASE: postgres
   KONG_PG_DATABASE: ${KONG_PG_DATABASE:-kong}
   KONG_PG_HOST: kong-db
@@ -24,7 +23,7 @@ services:
           "-d",
           "${KONG_PG_DATABASE:-kong}",
           "-U",
-          "${KONG_PG_USER:-kong}"
+          "${KONG_PG_USER:-kong}",
         ]
       interval: 10s
       timeout: 5s
@@ -80,7 +79,7 @@ services:
       - ${KONG_PORT_PROXY_HTTPS:-8443}:8443
       - 8444:8444
     healthcheck:
-      test: [ "CMD", "kong", "health" ]
+      test: ["CMD", "kong", "health"]
       interval: 10s
       timeout: 10s
       retries: 10

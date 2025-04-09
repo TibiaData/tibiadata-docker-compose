@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: ${KONGA_DB_USER:-konga}
       POSTGRES_PASSWORD: ${KONGA_DB_PASSWORD:-abc123}
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "${KONGA_DB_USER:-konga}" ]
+      test: ["CMD", "pg_isready", "-U", "${KONGA_DB_USER:-konga}"]
       interval: 10s
       timeout: 5s
       retries: 5
